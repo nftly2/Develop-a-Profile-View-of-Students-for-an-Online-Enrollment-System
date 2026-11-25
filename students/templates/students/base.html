@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Students{% endblock %} · EnrollHub</title>
+<style>
+:root{
+  --bg:#f5f3ee;--card:#fff;--ink:#1c2a29;--muted:#6c7977;--line:#e5e1d6;
+  --brand:#0f766e;--brand-soft:#d8f0ec;--brand-ink:#ffffff;
+  --ok:#14703f;--ok-bg:#dff3e6;--warn:#8a5a00;--warn-bg:#fdf0cc;--bad:#a52a22;--bad-bg:#fbe3e0;
+  --c0:#0f766e;--c1:#b45309;--c2:#7c3aed;--c3:#be185d;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0f1716;--card:#172221;--ink:#e6efed;--muted:#92a3a0;--line:#26363a;
+  --brand:#2dd4bf;--brand-soft:#16393a;--brand-ink:#06201e;
+  --ok:#6ee7a0;--ok-bg:#12331f;--warn:#f5c45a;--warn-bg:#3a2d0e;--bad:#ff8f86;--bad-bg:#3d1b19;
+}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:var(--card);border-right:1px solid var(--line);padding:20px 16px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-bottom:22px}
+.brand i{width:32px;height:32px;border-radius:10px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-style:normal}
+.nav-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:6px 8px}
+.nav{display:block;padding:9px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+.nav.on,.nav:hover{background:var(--brand-soft);color:var(--brand)}
+.me{margin-top:auto;border-top:1px solid var(--line);padding-top:14px;font-size:13px;color:var(--muted)}
+.me b{display:block;color:var(--ink);font-size:15px;margin-bottom:10px}
+.main{padding:24px 28px;min-width:0}
+.btn{display:inline-block;background:var(--brand);color:var(--brand-ink);border:0;padding:9px 16px;border-radius:10px;font:inherit;font-weight:600;cursor:pointer}
+.btn.soft{background:var(--brand-soft);color:var(--brand)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);width:100%}
+.btn.danger{background:var(--bad-bg);color:var(--bad)}
+input,select{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+input:focus,select:focus{outline:2px solid var(--brand);outline-offset:-1px}
+.badge{font-size:12px;font-weight:700;padding:3px 11px;border-radius:99px}
+.Enrolled{background:var(--ok-bg);color:var(--ok)}.Pending{background:var(--warn-bg);color:var(--warn)}.Dropped{background:var(--bad-bg);color:var(--bad)}
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .brand{margin:0 12px 0 0}.nav-label{display:none}.me{margin:0 0 0 auto;border:0;padding:0}.me b{display:inline;margin:0 8px 0 0}
+  .main{padding:16px}
+}
+{% block css %}{% endblock %}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="nav-label">Workspace</div>
+    <a class="nav {% block nav_students %}{% endblock %}" href="{% url 'student_list' %}">Students</a>
+    <a class="nav {% block nav_add %}{% endblock %}" href="{% url 'add_student' %}">+ Add student</a>
+  </aside>
+  <main class="main">{% block content %}{% endblock %}</main>
+</div>
+</body>
+</html>

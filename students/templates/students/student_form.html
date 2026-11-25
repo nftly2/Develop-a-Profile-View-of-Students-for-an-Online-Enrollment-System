@@ -1,0 +1,40 @@
+{% extends "students/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block nav_add %}{% if title == "Add student" %}on{% endif %}{% endblock %}
+{% block css %}
+.wrap{max-width:860px}
+h1{margin:0 0 18px;font-size:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:16px}
+.card h2{margin:0 0 14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px 18px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+.err{color:var(--bad);font-size:12px}.help{font-size:12px;color:var(--muted)}
+.row{display:flex;gap:10px}
+{% endblock %}
+{% block content %}
+<div class="wrap">
+  <h1>{{ title }}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for heading, fields in sections %}
+    <div class="card">
+      <h2>{{ heading }}</h2>
+      <div class="grid">
+        {% for f in fields %}
+        <div>
+          <label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}
+          {% if f.help_text %}<div class="help">{{ f.help_text }}</div>{% endif %}
+          {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+    <div class="row">
+      <button class="btn" type="submit">Save student</button>
+      <a class="btn soft" href="{% url 'student_list' %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
